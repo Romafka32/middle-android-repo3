@@ -21,6 +21,8 @@ import ru.yandex.architectureproject.domain.GetAllTasksUseCase
 import ru.yandex.architectureproject.domain.IncompleteTaskUseCase
 import ru.yandex.architectureproject.presentation.state.TaskAction
 import ru.yandex.architectureproject.presentation.state.TaskState
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.ConcurrentMap
 
 class TaskViewModel(
     private val addTaskUseCase: AddTaskUseCase,
@@ -33,7 +35,8 @@ class TaskViewModel(
     private val _state = MutableStateFlow<TaskState>(TaskState.Loading)
     val state: StateFlow<TaskState> = _state.asStateFlow()
 
-    private val taskForDeletionJobMap: MutableMap<Int, Job?> = mutableMapOf()
+    private val taskForDeletionJobMap: ConcurrentMap<Int, Job> = ConcurrentHashMap()
+
 
     init {
         reduce(TaskAction.LoadTasks)
@@ -59,12 +62,10 @@ class TaskViewModel(
     }
 
     private suspend fun loadTasks() {
-        withContext(ioDispatcher) {
-            getAllTasksUseCase()
-                .distinctUntilChanged()
-                .onStart { _state.value = TaskState.Loading }
-                .catch { e -> _state.value = TaskState.Error(e.message ?: "Ошибка загрузки") }
-                .collect { tasks -> _state.value = TaskState.Loaded(tasks) }
-        }
+        getAllTasksUseCase()
+            .distinctUntilChanged()
+            .onStart { _state.value = TaskState.Loading }
+            .catch { e -> _state.value = TaskState.Error(e.message ?: "Ошибка загрузки") }
+            .collect { tasks -> _state.value = TaskState.Loaded(tasks) }
     }
 }

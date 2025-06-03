@@ -8,7 +8,11 @@ class CompleteTaskUseCase(
 ) {
     suspend operator fun invoke(taskId: Int) {
         repository.completeTask(taskId)
-        delay(10000)
+        delay(DELAY_BEFORE_DELETION)
         repository.deleteTask(taskId)
+    }
+
+    companion object {
+        private const val DELAY_BEFORE_DELETION = 10_000L
     }
 }

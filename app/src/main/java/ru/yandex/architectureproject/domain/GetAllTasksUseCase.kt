@@ -7,7 +7,7 @@ import ru.yandex.architectureproject.data.repository.TaskRepository
 class GetAllTasksUseCase(
     private val repository: TaskRepository,
 ) {
-    operator fun invoke(): Flow<List<Task>> {
+    suspend operator fun invoke(): Flow<List<Task>> {
         return repository.getAllTasks()
     }
 }
