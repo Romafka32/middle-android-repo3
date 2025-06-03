@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import ru.yandex.architectureproject.data.model.Task
 import ru.yandex.architectureproject.presentation.state.TaskAction
 import ru.yandex.architectureproject.presentation.state.TaskState
@@ -57,7 +58,7 @@ class MainActivity : ComponentActivity() {
             TaskViewModelFactory()
         }
 
-        val state by viewModel.state.collectAsState()
+        val state by viewModel.state.collectAsStateWithLifecycle()
 
         Box(
             modifier = Modifier
