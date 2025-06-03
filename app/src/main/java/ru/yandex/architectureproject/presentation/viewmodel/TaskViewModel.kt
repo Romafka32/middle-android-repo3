@@ -27,8 +27,7 @@ class TaskViewModel(
     private val deleteTaskUseCase: DeleteTaskUseCaseImpl,
     private val getAllTasksUseCase: GetAllTasksUseCaseImpl,
     private val completeTaskUseCase: CompleteTaskUseCaseImpl,
-    private val incompleteTaskUseCase: IncompleteTaskUseCaseImpl,
-    private val ioDispatcher: CoroutineDispatcher,
+    private val incompleteTaskUseCase: IncompleteTaskUseCaseImpl
 ) : ViewModel() {
     private val _state = MutableStateFlow<TaskState>(TaskState.Loading)
     val state: StateFlow<TaskState> = _state.asStateFlow()

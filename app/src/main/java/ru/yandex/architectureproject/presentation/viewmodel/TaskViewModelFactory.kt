@@ -21,14 +21,12 @@ class TaskViewModelFactory : ViewModelProvider.Factory {
         val completeTaskUseCase = CompleteTaskUseCaseImpl(repository)
         val incompleteTaskUseCase = IncompleteTaskUseCaseImpl(repository)
         val getAllTasksUseCase = GetAllTasksUseCaseImpl(repository)
-        val ioDispatcher = Dispatchers.IO
         return TaskViewModel(
             addTaskUseCase,
             deleteTaskUseCase,
             getAllTasksUseCase,
             completeTaskUseCase,
-            incompleteTaskUseCase,
-            ioDispatcher,
+            incompleteTaskUseCase
         ) as T
     }
 }
