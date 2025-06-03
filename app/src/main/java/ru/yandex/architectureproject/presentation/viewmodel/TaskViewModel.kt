@@ -12,24 +12,22 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.job
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import ru.yandex.architectureproject.data.model.Task
-import ru.yandex.architectureproject.domain.AddTaskUseCase
-import ru.yandex.architectureproject.domain.CompleteTaskUseCase
-import ru.yandex.architectureproject.domain.DeleteTaskUseCase
-import ru.yandex.architectureproject.domain.GetAllTasksUseCase
-import ru.yandex.architectureproject.domain.IncompleteTaskUseCase
+import ru.yandex.architectureproject.domain.impl.AddTaskUseCaseImpl
+import ru.yandex.architectureproject.domain.impl.CompleteTaskUseCaseImpl
+import ru.yandex.architectureproject.domain.impl.DeleteTaskUseCaseImpl
+import ru.yandex.architectureproject.domain.impl.GetAllTasksUseCaseImpl
+import ru.yandex.architectureproject.domain.impl.IncompleteTaskUseCaseImpl
 import ru.yandex.architectureproject.presentation.state.TaskAction
 import ru.yandex.architectureproject.presentation.state.TaskState
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
 
 class TaskViewModel(
-    private val addTaskUseCase: AddTaskUseCase,
-    private val deleteTaskUseCase: DeleteTaskUseCase,
-    private val getAllTasksUseCase: GetAllTasksUseCase,
-    private val completeTaskUseCase: CompleteTaskUseCase,
-    private val incompleteTaskUseCase: IncompleteTaskUseCase,
+    private val addTaskUseCase: AddTaskUseCaseImpl,
+    private val deleteTaskUseCase: DeleteTaskUseCaseImpl,
+    private val getAllTasksUseCase: GetAllTasksUseCaseImpl,
+    private val completeTaskUseCase: CompleteTaskUseCaseImpl,
+    private val incompleteTaskUseCase: IncompleteTaskUseCaseImpl,
     private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
     private val _state = MutableStateFlow<TaskState>(TaskState.Loading)
